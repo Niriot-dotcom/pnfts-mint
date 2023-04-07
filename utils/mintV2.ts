@@ -314,9 +314,26 @@ export const getRemainingAccountsByGuardType = ({
     tokenBurn: () => {
       if (!candyMachine.candyGuard) return {}
       const tokenBurnGuard = guard as TokenBurnGuardSettings
+      const SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID = new PublicKey(
+        "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+      );
+
+      const [tokenBurnPda] = PublicKey.findProgramAddressSync(
+        [
+          payer.toBuffer(),
+          TOKEN_PROGRAM_ID.toBuffer(),
+          tokenBurnGuard.mint.toBuffer(),
+        ],
+        SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID
+      )
 
       return {
         accounts: [
+          {
+            pubkey: tokenBurnPda,
+            isSigner: false,
+            isWritable: true,
+          },
           {
             pubkey: tokenBurnGuard.mint,
             isSigner: false,

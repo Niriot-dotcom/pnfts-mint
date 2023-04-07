@@ -104,7 +104,6 @@ export default function Home() {
         lastValidBlockHeight: latest.lastValidBlockHeight,
         signature: txid,
       })
-      console.log("TXN res: ", res);
     } catch (e) {
       const msg = fromTxError(e)
 
