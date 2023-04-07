@@ -38,6 +38,7 @@ import {
   Metaplex,
   Option,
   SolPaymentGuardSettings,
+  TokenBurnGuardSettings,
 } from "@metaplex-foundation/js"
 import { u32 } from "@metaplex-foundation/beet"
 import allowList from "../allowlist.json"
@@ -310,6 +311,20 @@ export const getRemainingAccountsByGuardType = ({
         ],
       }
     },
+    tokenBurn: () => {
+      if (!candyMachine.candyGuard) return {}
+      const tokenBurnGuard = guard as TokenBurnGuardSettings
+
+      return {
+        accounts: [
+          {
+            pubkey: tokenBurnGuard.mint,
+            isSigner: false,
+            isWritable: true,
+          },
+        ],
+      }
+    }
   }
 
   if (!remainingAccs[guardType]) {

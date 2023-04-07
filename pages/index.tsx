@@ -99,11 +99,12 @@ export default function Home() {
       })
 
       const latest = await connection.getLatestBlockhash()
-      await connection.confirmTransaction({
+      const res = await connection.confirmTransaction({
         blockhash: latest.blockhash,
         lastValidBlockHeight: latest.lastValidBlockHeight,
         signature: txid,
       })
+      console.log("TXN res: ", res);
     } catch (e) {
       const msg = fromTxError(e)
 
